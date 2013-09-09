@@ -45,16 +45,16 @@ class ExecuteControllerCommand extends Command {
 	protected function getArguments()
 	{
 		return array(
-			array('controller', self::REQUIRED, 'The name of the controller to execute'),
-			array('action', self::OPTIONAL, 'The name of the action on the controller to execute'),
+			array('controller', self::REQUIRED),
+			array('action', self::OPTIONAL),
 		);
 	}
 
 	protected function getOptions()
 	{
 		return array(
-			array('env','e', self::OPTIONAL, 'The name of the environment'),
-			array('verbose','v', self::VALUE_NONE, 'Debug mode'),
+			array('env','e', self::OPTIONAL),
+			array('verbose','v', self::VALUE_NONE),
 		);
 	}
 
