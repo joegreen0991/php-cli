@@ -302,7 +302,12 @@ abstract class Command {
         
         protected function fatal($output,$exitcode = 1){
                 $this->error($output);
-                exit($exitcode);
+                $this->bail($exitcode);
+        }
+        
+        protected function bail($exitcode = 1)
+        {
+             exit($exitcode);   
         }
         
         protected function getArgument($name,$default = null){
