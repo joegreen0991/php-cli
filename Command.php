@@ -14,6 +14,8 @@ abstract class Command {
         
         protected $name;
         
+        protected $quiet;
+        
         // Set up shell colors
         private $foreground_colors = array(
                 'black'                        => '0;30',
@@ -47,8 +49,19 @@ abstract class Command {
         
         public function __construct($name, $arguments, $options) {
                 $this->name = $name;
+
+                if (isset($options['help']) || isset($options['h']))
+                {
+                    $this->showUsage();
+                    $this->bail();
+                }
+        
                 $this->buildArguments($arguments);
                 $this->buildOptions($options);
+        
+                if($this->getOption('quiet')){
+                    $this->quiet = true;
+                }
         }
         
         private function buildArguments($arguments)
@@ -269,7 +282,10 @@ abstract class Command {
         }
 
         protected function line($output){
-                echo $output . "\n";
+                if(!$this->quiet)
+                {
+                        echo $output . "\n";
+                }
         }
         
         protected function info($output){
