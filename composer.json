@@ -3,9 +3,7 @@
     "type": "library",
     "description": "Command component based on laravel's",
     "autoload": {
-        "classmap": { 
-            "Command": "Command.php"
-         }
+        "classmap": ["Command.php"]
     },
     "minimum-stability": "dev"
 }
