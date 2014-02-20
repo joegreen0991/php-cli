@@ -73,48 +73,57 @@ abstract class Command {
                 }
             }
         }
+        private function getMergedOptions()
+    {
+        return array_merge(array(
+            array('help', 'h', self::VALUE_NONE, 'Display help'),
+            array('quiet', 'q', self::VALUE_NONE, 'Suppress all output'),
+            array('verbose', 'v', self::OPTIONAL, 'Set the verbosity level'),
+                ), $this->getOptions());
+    }
 
         private function buildOptions($options)
-        {
+    {
 
-            foreach ($this->getOptions() as $option) {
+        foreach ($this->getMergedOptions() as $option) {
 
-                $set = isset($options[$option[0]]) || isset($options[$option[1]]);
+            $set = isset($options[$option[0]]) || isset($options[$option[1]]);
 
-                if ($set)
-                {
-                    $value = isset($options[$option[0]]) ? $options[$option[0]] : $options[$option[1]];
-                }
+            if ($set)
+            {
+                $value = isset($options[$option[0]]) ? $options[$option[0]] : $options[$option[1]];
+            }
 
-                $array = self::VALUE_IS_ARRAY | self::REQUIRED;
+            $array = self::VALUE_IS_ARRAY | self::REQUIRED;
 
-                if ($set && (($option[2] & $array) === $array))
-                {
-                    $this->showUsage();
-                }
+            if ($set && (($option[2] & $array) === $array))
+            {
+                $this->showUsage();
+                $this->bail();
+            }
 
-                if ($set && !$value && (($option[2] & self::REQUIRED) === self::REQUIRED))
-                {
-                    $this->fatal('Value for option "--' . $option[0] . ' (-' . $option[1] . ')" is required');
-                }
+            if ($set && !$value && (($option[2] & self::REQUIRED) === self::REQUIRED))
+            {
+                $this->fatal('Value for option "--' . $option[0] . ' (-' . $option[1] . ')" is required');
+            }
 
-                if ($set && !is_bool($value) && strlen($value) > 0 && (($option[2] & self::VALUE_NONE) === self::VALUE_NONE))
-                {
-                    $this->fatal('Cannot set a value for option "--' . $option[0] . ' (-' . $option[1] . ')"');
-                }
+            if ($set && !is_bool($value) && strlen($value) > 0 && (($option[2] & self::VALUE_NONE) === self::VALUE_NONE))
+            {
+                $this->fatal('Cannot set a value for option "--' . $option[0] . ' (-' . $option[1] . ')"');
+            }
 
-                if ($set)
-                {
-                    $this->options[$option[0]] = (($option[2] & self::VALUE_NONE) === self::VALUE_NONE) ? true : $value;
-                }elseif(isset($option[4]))
-                {
-                    $this->options[$option[0]] = $option[4];
-                }else
-                {
-                    $this->options[$option[0]] = null;
-                }
+            if ($set)
+            {
+                $this->options[$option[0]] = (($option[2] & self::VALUE_NONE) === self::VALUE_NONE) ? true : $value;
+            }elseif(isset($option[4]))
+            {
+                $this->options[$option[0]] = $option[4];
+            }else
+            {
+                $this->options[$option[0]] = null;
             }
         }
+    }
         
         // Returns colored string
         private function getColoredString($string, $foreground_color = null, $background_color = null) {
