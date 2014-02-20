@@ -192,7 +192,7 @@ abstract class Command {
         
                     $strlen = strlen($argument[0]);
                     
-                    $tabSize = 1 + (($strlen - ($strlen % 4)) / 4);
+                    $tabSize = 5 - (($strlen - ($strlen % 4)) / 4);
         
                     $required .= "\n\t --" . $argument[0] . str_repeat("\t",$tabSize) . '(-' . $argument[1];
         
