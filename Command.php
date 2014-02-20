@@ -162,7 +162,7 @@ abstract class Command {
                     }
                 }
         
-                $this->output->info('Usage: ' . $this->name . ' ' . $cmd);
+                $this->info('Usage: ' . $this->name . ' ' . $cmd);
         
                 $required = '';
         
@@ -181,7 +181,7 @@ abstract class Command {
                     $required .= ")\t" . $argument[3];
                 }
         
-                $this->output->info($required);
+                $this->info($required);
             }
         
         protected function ask($question){
