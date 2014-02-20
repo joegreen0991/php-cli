@@ -1,0 +1,11 @@
+{
+    "name": "joegreen0991/php-cli",
+    "type": "library",
+    "description": "Command component based on laravel's",
+    "autoload": {
+        "classmap": { 
+            "Command": "Command.php"
+         }
+    },
+    "minimum-stability": "dev"
+}
