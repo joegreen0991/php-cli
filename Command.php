@@ -106,9 +106,9 @@ abstract class Command {
                 if ($set)
                 {
                     $this->options[$option[0]] = (($option[2] & self::VALUE_NONE) === self::VALUE_NONE) ? true : $value;
-                }elseif(isset($option[3]))
+                }elseif(isset($option[4]))
                 {
-                    $this->options[$option[0]] = $option[3];
+                    $this->options[$option[0]] = $option[4];
                 }else
                 {
                     $this->options[$option[0]] = null;
@@ -146,22 +146,43 @@ abstract class Command {
         return self::$stty = $exitcode === 0;
     }
         
-        private function showUsage(){
-                
-                $required = '';
-                
-                foreach($this->getArguments() as $argument){
-                        
-                        if($argument[1] === self::REQUIRED){
-                                $required .= ' ' . $argument[0];
-                        }
-                        elseif($argument[1] === self::OPTIONAL){
-                                $required .= ' [' . $argument[0] . ']';
-                        }
+        private function showUsage()
+            {
+        
+                $cmd = '';
+        
+                foreach ($this->getArguments() as $argument) {
+        
+                    if (($argument[1] & self::REQUIRED)  === self::REQUIRED)
+                    {
+                        $cmd .= ' ' . $argument[0];
+                    } elseif (($argument[1] & self::OPTIONAL) === self::OPTIONAL)
+                    {
+                        $cmd .= ' [' . $argument[0] . ']';
+                    }
                 }
-
-                $this->fatal('Usage: ' . $this->name . ' ' . $required);
-        }
+        
+                $this->output->info('Usage: ' . $this->name . ' ' . $cmd);
+        
+                $required = '';
+        
+                foreach ($this->getMergedOptions() as $argument) {
+        
+                    $required .= "\n\t --" . $argument[0] . "\t" . '(-' . $argument[1];
+        
+                    if (($argument[2] & self::REQUIRED) === self::REQUIRED)
+                    {
+                        $required .= '=""';
+                    } elseif (($argument[2] & self::OPTIONAL) === self::OPTIONAL)
+                    {
+                        $required .= '[=""]';
+                    }
+        
+                    $required .= ")\t" . $argument[3];
+                }
+        
+                $this->output->info($required);
+            }
         
         protected function ask($question){
                 
