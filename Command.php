@@ -190,7 +190,11 @@ abstract class Command {
         
                 foreach ($this->getMergedOptions() as $argument) {
         
-                    $required .= "\n\t --" . $argument[0] . "\t" . '(-' . $argument[1];
+                    $strlen = strlen($argument[0]);
+                    
+                    $tabSize = 1 + (($strlen - ($strlen % 4)) / 4);
+        
+                    $required .= "\n\t --" . $argument[0] . str_repeat("\t",$tabSize) . '(-' . $argument[1];
         
                     if (($argument[2] & self::REQUIRED) === self::REQUIRED)
                     {
