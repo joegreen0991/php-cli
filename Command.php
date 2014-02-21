@@ -72,6 +72,7 @@ abstract class Command {
                 if (!isset($arguments[$i]) && ($argument[1] === self::REQUIRED))
                 {
                     $this->showUsage();
+                    $this->bail();
                 }
 
                 if (isset($arguments[$i]))
