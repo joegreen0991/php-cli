@@ -191,7 +191,7 @@ abstract class Command {
         
                 foreach ($this->getMergedOptions() as $argument) {
         
-                    $strlen = strlen($argument[0]) + 2;
+                    $strlen = strlen($argument[0]) + 3;
                     
                     $tabSize = max(4 - floor($strlen / 8),1);
         
