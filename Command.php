@@ -221,7 +221,7 @@ abstract class Command {
                             $required .= "  ";
                     }
                     
-                    $required .= "\t\t" . $argument[3];
+                    $required .= "\t" . $argument[3];
                 }
         
                 $this->line($required);
