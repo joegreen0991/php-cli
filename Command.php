@@ -199,23 +199,29 @@ abstract class Command {
         
                     if($argument[1]) {
                             
-                            $required .= '(-' . $argument[1];
+                            $required .= '-' . $argument[1];
                             
-                            if (($argument[2] & self::REQUIRED) === self::REQUIRED)
+                            if(($argument[2] & self::VALUE_NONE) !== self::VALUE_NONE)
                             {
-                                $required .= '=""';
-                            } elseif (($argument[2] & self::OPTIONAL) === self::OPTIONAL)
-                            {
-                                $required .= '[=""]';
+                                    if (($argument[2] & self::REQUIRED) === self::REQUIRED)
+                                    {
+                                        $required .= '=""  ';
+                                    } elseif (($argument[2] & self::OPTIONAL) === self::OPTIONAL)
+                                    {
+                                        $required .= '[=""]';
+                                    }
                             }
-                
-                            $required .= ")\t" . $argument[3];
+                            else 
+                            {
+                                    $required .= "     ";
+                            }
+                                    
                     }
                     else {
-                            $required .= "         \t";
+                            $required .= "  ";
                     }
                     
-                    $required .= $argument[3];
+                    $required .= "\t" . $argument[3];
                 }
         
                 $this->line($required);
