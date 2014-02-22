@@ -195,17 +195,27 @@ abstract class Command {
                     
                     $tabSize = max(4 - floor($strlen / 8),1);
         
-                    $required .= "\n\t --" . $argument[0] . str_repeat("\t",$tabSize) . '(-' . $argument[1];
+                    $required .= "\n\t --" . $argument[0] . str_repeat("\t",$tabSize);
         
-                    if (($argument[2] & self::REQUIRED) === self::REQUIRED)
-                    {
-                        $required .= '=""';
-                    } elseif (($argument[2] & self::OPTIONAL) === self::OPTIONAL)
-                    {
-                        $required .= '[=""]';
+                    if($argument[1]) {
+                            
+                            $required .= . '(-' . $argument[1];
+                            
+                            if (($argument[2] & self::REQUIRED) === self::REQUIRED)
+                            {
+                                $required .= '=""';
+                            } elseif (($argument[2] & self::OPTIONAL) === self::OPTIONAL)
+                            {
+                                $required .= '[=""]';
+                            }
+                
+                            $required .= ")\t" . $argument[3];
                     }
-        
-                    $required .= ")\t" . $argument[3];
+                    else {
+                            $required .= "     ";
+                    }
+                    
+                    $required .= $argument[3];
                 }
         
                 $this->line($required);
