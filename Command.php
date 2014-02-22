@@ -185,7 +185,7 @@ abstract class Command {
                     }
                 }
         
-                $this->line('Usage: ' . $this->name . ' ' . $cmd);
+                $this->line(PHP_EOL . 'Usage: ' . $this->name . ' ' . $cmd);
         
                 $required = '';
         
@@ -193,7 +193,7 @@ abstract class Command {
         
                     $strlen = strlen($argument[0]) + 3;
                     
-                    $tabSize = max(3 - floor($strlen / 8),1);
+                    $tabSize = max(4 - floor($strlen / 8),1);
         
                     $required .= "\n\t --" . $argument[0] . str_repeat("\t",$tabSize);
         
@@ -221,7 +221,7 @@ abstract class Command {
                             $required .= "  ";
                     }
                     
-                    $required .= "\t" . $argument[3];
+                    $required .= "\t\t" . $argument[3];
                 }
         
                 $this->line($required);
