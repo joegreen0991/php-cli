@@ -199,7 +199,7 @@ abstract class Command {
         
                     if($argument[1]) {
                             
-                            $required .= . '(-' . $argument[1];
+                            $required .= '(-' . $argument[1];
                             
                             if (($argument[2] & self::REQUIRED) === self::REQUIRED)
                             {
@@ -212,7 +212,7 @@ abstract class Command {
                             $required .= ")\t" . $argument[3];
                     }
                     else {
-                            $required .= "     ";
+                            $required .= "     \t";
                     }
                     
                     $required .= $argument[3];
